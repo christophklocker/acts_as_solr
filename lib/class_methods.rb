@@ -176,9 +176,9 @@ module ActsAsSolr #:nodoc:
       result
     end
     
-    def multi_model_suffix(options)
-      models = "AND (#{solr_configuration[:type_field]}:\"#{self.name}\""
-      models << " OR " + options[:models].collect {|m| "#{solr_configuration[:type_field]}:\"#{m.to_s}\""}.join(" OR ") if options[:models].is_a?(Array)
+    def multi_model_suffix(options)     
+      models = "AND (#{solr_configuration[:type_field]}:\"#{self.name}\"#{solr_configuration[:app]}"
+      models << " OR " + options[:models].collect {|m| "#{solr_configuration[:type_field]}:\"#{m.to_s}\"#{solr_configuration[:app]}"}.join(" OR ") if options[:models].is_a?(Array)
       models << ")"
     end
     

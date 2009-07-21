@@ -25,7 +25,7 @@ class ClassMethodsTest < Test::Unit::TestCase
   include ActsAsSolr::ClassMethods
   
   def solr_configuration
-    @solr_configuration ||= {:type_field => "type_t", :primary_key_field => "id"}
+    @solr_configuration ||= {:type_field => "type_t", :primary_key_field => "id", :app => "appname"}
   end
   
   context "when multi-searching" do
@@ -34,12 +34,12 @@ class ClassMethodsTest < Test::Unit::TestCase
     end
     
     should "include the type field in the query" do
-      expects(:parse_query).with("name:paul", {:results_format => :objects}, "AND (type_t:\"User\")")
+      expects(:parse_query).with("name:paul", {:results_format => :objects}, "AND (type_t:\"User\"appname)")
       multi_solr_search("name:paul")
     end
     
     should "add all models in the query" do
-      expects(:parse_query).with("name:paul", {:results_format => :objects, :models => ["Movie", "DVD"]}, "AND (type_t:\"User\" OR type_t:\"Movie\" OR type_t:\"DVD\")")
+      expects(:parse_query).with("name:paul", {:results_format => :objects, :models => ["Movie", "DVD"]}, "AND (type_t:\"User\"appname OR type_t:\"Movie\"appname OR type_t:\"DVD\"appname)")
       multi_solr_search("name:paul", :models => ["Movie", "DVD"])
     end
     

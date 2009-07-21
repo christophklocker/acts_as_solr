@@ -157,7 +157,7 @@ class InstanceMethodsTest < Test::Unit::TestCase
     context "when converting an instance to a solr document" do
       setup do
         @instance.configuration = {:if => true, :auto_commit => true, :solr_fields => {:name => {:boost => 9.0}}, :boost => 10.0}
-        @instance.solr_configuration = {:type_field => "type", :primary_key_field => "pk_id", :default_boost => 25.0}
+        @instance.solr_configuration = {:type_field => "type", :primary_key_field => "pk_id", :default_boost => 25.0, :app => "Appname"}
       end
     
       should "add a document boost" do
@@ -169,7 +169,7 @@ class InstanceMethodsTest < Test::Unit::TestCase
       end
       
       should "set the type field" do
-        assert_equal "SolrInstance", @instance.to_solr_doc[:type]
+        assert_equal "SolrInstanceAppname", @instance.to_solr_doc[:type]
       end
       
       should "set the primary key fields" do
