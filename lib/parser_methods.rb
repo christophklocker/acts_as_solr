@@ -86,8 +86,8 @@ module ActsAsSolr #:nodoc:
     end
     
     def solr_type_condition
-      subclasses.inject("(#{solr_configuration[:type_field]}:\"#{solr_configuration[:app]}:#{self.name}\"") do |condition, subclass|
-        condition << " OR #{solr_configuration[:type_field]}:\"#{solr_configuration[:app]}:#{subclass.name}\""
+      subclasses.inject("(#{solr_configuration[:type_field]}:" + "#{solr_configuration[:app]}:#{self.name}".gsub!(":","_")) do |condition, subclass|
+         condition << " OR #{solr_configuration[:type_field]}:" + "#{solr_configuration[:app]}:#{subclass.name}".gsub!(":","_")
       end << ')'
     end
     
