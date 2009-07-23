@@ -34,12 +34,12 @@ class ClassMethodsTest < Test::Unit::TestCase
     end
     
     should "include the type field in the query" do
-      expects(:parse_query).with("name:paul", {:results_format => :objects}, "AND (type_t:\"User\"appname)")
+      expects(:parse_query).with("name:paul", {:results_format => :objects}, "AND (type_t:\"appname:User\")")
       multi_solr_search("name:paul")
     end
     
     should "add all models in the query" do
-      expects(:parse_query).with("name:paul", {:results_format => :objects, :models => ["Movie", "DVD"]}, "AND (type_t:\"User\"appname OR type_t:\"Movie\"appname OR type_t:\"DVD\"appname)")
+      expects(:parse_query).with("name:paul", {:results_format => :objects, :models => ["Movie", "DVD"]}, "AND (type_t:\"appname:User\" OR type_t:\"appname:Movie\" OR type_t:\"appname:DVD\")")
       multi_solr_search("name:paul", :models => ["Movie", "DVD"])
     end
     
