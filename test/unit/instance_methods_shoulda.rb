@@ -169,7 +169,7 @@ class InstanceMethodsTest < Test::Unit::TestCase
       end
       
       should "set the type field" do
-        assert_equal "Appname:SolrInstance", @instance.to_solr_doc[:type]
+        assert_equal '"Appname:SolrInstance"', @instance.to_solr_doc[:type]
       end
       
       should "set the primary key fields" do

@@ -40,7 +40,7 @@ module ActsAsSolr #:nodoc:
       doc.boost = validate_boost(configuration[:boost]) if configuration[:boost]
       
       doc << {:id => solr_id,
-              solr_configuration[:type_field] => "#{solr_configuration[:app]}:#{self.class.name}",
+              solr_configuration[:type_field] => "\"#{solr_configuration[:app]}:#{self.class.name}\"",
               solr_configuration[:primary_key_field] => record_id(self).to_s}
 
       # iterate through the fields and add them to the document,
