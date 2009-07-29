@@ -5,8 +5,14 @@ module ActsAsSolr #:nodoc:
     # Method used by mostly all the ClassMethods when doing a search
     def parse_query(query=nil, options={}, models=nil)
       valid_options = [:offset, :limit, :facets, :models, :results_format, :order, :scores, :operator, :include, :lazy]
+      # BEGIN will_paginate support
+      valid_options.push(:per_page, :page)
+      if options[:per_page] && options[:page]
+        options[:limit] = options[:per_page].to_i
+        options[:offset] = (options[:page].to_i-1)*options[:per_page].to_i
+      end
+      # END will_paginate support
       query_options = {}
-
       return nil if (query.nil? || query.strip == '')
 
       raise "Invalid parameters: #{(options.keys - valid_options).join(',')}" unless (options.keys - valid_options).empty?

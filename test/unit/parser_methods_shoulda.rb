@@ -171,6 +171,14 @@ class ParserMethodsTest < Test::Unit::TestCase
         }
         @parser.parse_query "foo", :limit => 10, :offset => 20
       end
+      
+      should "set the page and per_page" do
+        ActsAsSolr::Post.expects(:execute).with {|request|
+          10 == request.to_hash[:rows]
+          20 == request.to_hash[:start]
+        }
+        @parser.parse_query "foo", :page => 3, :per_page => 10
+      end
     
       should "set the operator" do
         ActsAsSolr::Post.expects(:execute).with {|request|
